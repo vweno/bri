@@ -1,0 +1,84 @@
+
+==========================================================================================================
+              Country Name            ISO3 Code          WB Region             WB Income Group     Group  
+----------------------------------------------------------------------------------------------------------
+1              Azerbaijan                AZE      Europe and Central Asia    Upper middle income Treatment
+2              Bangladesh                BGD             South Asia          Lower middle income Treatment
+3   Bolivia (Plurinational State of)     BOL    Latin America and Caribbean  Lower middle income Treatment
+4               Cambodia                 KHM       East Asia and Pacific     Lower middle income Treatment
+5               Cameroon                 CMR         Sub-Saharan Africa      Lower middle income Treatment
+6                 Chad                   TCD         Sub-Saharan Africa          Low income      Treatment
+7                Congo                   COG         Sub-Saharan Africa      Lower middle income Treatment
+8            Côte d’Ivoire               CIV         Sub-Saharan Africa      Lower middle income Treatment
+9                Egypt                   EGY    Middle East and North Africa Lower middle income Treatment
+10         Equatorial Guinea             GNQ         Sub-Saharan Africa      Upper middle income Treatment
+11              Ethiopia                 ETH         Sub-Saharan Africa          Low income      Treatment
+12               Ghana                   GHA         Sub-Saharan Africa      Lower middle income Treatment
+13               Guinea                  GIN         Sub-Saharan Africa          Low income      Treatment
+14             Indonesia                 IDN       East Asia and Pacific     Lower middle income Treatment
+15     Iran (Islamic Republic of)        IRN    Middle East and North Africa Upper middle income Treatment
+16               Jordan                  JOR    Middle East and North Africa Upper middle income Treatment
+17             Kazakhstan                KAZ      Europe and Central Asia    Upper middle income Treatment
+18               Kenya                   KEN         Sub-Saharan Africa      Lower middle income Treatment
+19             Kyrgyzstan                KGZ      Europe and Central Asia    Lower middle income Treatment
+20  Lao People's Democratic Republic     LAO       East Asia and Pacific     Lower middle income Treatment
+21             Madagascar                MDG         Sub-Saharan Africa          Low income      Treatment
+22              Malaysia                 MYS       East Asia and Pacific     Upper middle income Treatment
+23                Mali                   MLI         Sub-Saharan Africa          Low income      Treatment
+24              Mongolia                 MNG       East Asia and Pacific     Lower middle income Treatment
+25             Montenegro                MNE      Europe and Central Asia    Upper middle income Treatment
+26             Mozambique                MOZ         Sub-Saharan Africa          Low income      Treatment
+27               Nepal                   NPL             South Asia              Low income      Treatment
+28              Nigeria                  NGA         Sub-Saharan Africa      Lower middle income Treatment
+29              Pakistan                 PAK             South Asia          Lower middle income Treatment
+30          Papua New Guinea             PNG       East Asia and Pacific     Lower middle income Treatment
+31            Philippines                PHL       East Asia and Pacific     Lower middle income Treatment
+32         Russian Federation            RUS      Europe and Central Asia    Upper middle income Treatment
+33              Senegal                  SEN         Sub-Saharan Africa      Lower middle income Treatment
+34               Serbia                  SRB      Europe and Central Asia    Upper middle income Treatment
+35             Sri Lanka                 LKA             South Asia          Upper middle income Treatment
+36              Thailand                 THA       East Asia and Pacific     Upper middle income Treatment
+37               Uganda                  UGA         Sub-Saharan Africa          Low income      Treatment
+38    United Republic of Tanzania        TZA         Sub-Saharan Africa          Low income      Treatment
+39               Zambia                  ZMB         Sub-Saharan Africa      Lower middle income Treatment
+40              Zimbabwe                 ZWE         Sub-Saharan Africa      Lower middle income Treatment
+41            Afghanistan                AFG             South Asia              Low income       Control 
+42              Algeria                  DZA    Middle East and North Africa Upper middle income  Control 
+43               Angola                  AGO         Sub-Saharan Africa      Lower middle income  Control 
+44              Belarus                  BLR      Europe and Central Asia    Upper middle income  Control 
+45               Benin                   BEN         Sub-Saharan Africa          Low income       Control 
+46               Brazil                  BRA    Latin America and Caribbean  Upper middle income  Control 
+47            Burkina Faso               BFA         Sub-Saharan Africa          Low income       Control 
+48              Burundi                  BDI         Sub-Saharan Africa          Low income       Control 
+49      Central African Republic         CAF         Sub-Saharan Africa          Low income       Control 
+50              Colombia                 COL    Latin America and Caribbean  Upper middle income  Control 
+51         Dominican Republic            DOM    Latin America and Caribbean  Upper middle income  Control 
+52              Ecuador                  ECU    Latin America and Caribbean  Upper middle income  Control 
+53            El Salvador                SLV    Latin America and Caribbean  Lower middle income  Control 
+54             Guatemala                 GTM    Latin America and Caribbean  Upper middle income  Control 
+55               Haiti                   HTI    Latin America and Caribbean      Low income       Control 
+56                Iraq                   IRQ    Middle East and North Africa Upper middle income  Control 
+57              Lesotho                  LSO         Sub-Saharan Africa      Lower middle income  Control 
+58              Liberia                  LBR         Sub-Saharan Africa          Low income       Control 
+59               Malawi                  MWI         Sub-Saharan Africa          Low income       Control 
+60             Mauritania                MRT         Sub-Saharan Africa      Lower middle income  Control 
+61               Mexico                  MEX    Latin America and Caribbean  Upper middle income  Control 
+62              Morocco                  MAR    Middle East and North Africa Lower middle income  Control 
+63              Myanmar                  MMR       East Asia and Pacific     Lower middle income  Control 
+64               Niger                   NER         Sub-Saharan Africa          Low income       Control 
+65              Paraguay                 PRY    Latin America and Caribbean  Upper middle income  Control 
+66                Peru                   PER    Latin America and Caribbean  Upper middle income  Control 
+67               Rwanda                  RWA         Sub-Saharan Africa          Low income       Control 
+68            Sierra Leone               SLE         Sub-Saharan Africa          Low income       Control 
+69               Sudan                   SDN         Sub-Saharan Africa      Lower middle income  Control 
+70             Tajikistan                TJK      Europe and Central Asia        Low income       Control 
+71            Timor-Leste                TLS       East Asia and Pacific     Lower middle income  Control 
+72                Togo                   TGO         Sub-Saharan Africa          Low income       Control 
+73               Turkey                  TUR      Europe and Central Asia    Upper middle income  Control 
+74            Turkmenistan               TKM      Europe and Central Asia    Upper middle income  Control 
+75              Ukraine                  UKR      Europe and Central Asia    Lower middle income  Control 
+76             Uzbekistan                UZB      Europe and Central Asia    Lower middle income  Control 
+77 Venezuela (Bolivarian Republic of)    VEN    Latin America and Caribbean  Upper middle income  Control 
+78              Viet Nam                 VNM       East Asia and Pacific     Lower middle income  Control 
+79               Yemen                   YEM    Middle East and North Africa     Low income       Control 
+----------------------------------------------------------------------------------------------------------

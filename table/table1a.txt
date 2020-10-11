@@ -1,0 +1,41 @@
+
+===================================================================================
+                                                             (1)           (2)     
+-----------------------------------------------------------------------------------
+Post_treat                                                0.072***       0.086***  
+                                                           (0.013)       (0.011)   
+                                                                                   
+as.integer(Post_treat):RegionSouth Asia                     0.008                  
+                                                           (0.017)                 
+                                                                                   
+as.integer(Post_treat):RegionEurope                     Central Asia    -0.121***  
+                                                           (0.018)                 
+                                                                                   
+as.integer(Post_treat):RegionMiddle East                North Africa    -0.097***  
+                                                           (0.017)                 
+                                                                                   
+as.integer(Post_treat):RegionEast Asia                     Pacific       0.039**   
+                                                           (0.017)                 
+                                                                                   
+as.integer(Post_treat):RegionSub-Saharan Africa            -0.011                  
+                                                           (0.017)                 
+                                                                                   
+as.integer(Post_treat):RegionLatin America                Caribbean                
+                                                                                   
+                                                                                   
+as.integer(Post_treat):Income_groupLow income                             0.010    
+                                                                         (0.018)   
+                                                                                   
+as.integer(Post_treat):Income_groupUpper middle income                  -0.141***  
+                                                                         (0.019)   
+                                                                                   
+as.integer(Post_treat):Income_groupLower middle income                             
+                                                                                   
+                                                                                   
+-----------------------------------------------------------------------------------
+Country FE                                                   Yes           Yes     
+Year FE                                                      Yes           Yes     
+Observations                                                 785           785     
+Adjusted R2                                                 0.997         0.998    
+===================================================================================
+Note:                                                   *p<0.1; **p<0.05; ***p<0.01

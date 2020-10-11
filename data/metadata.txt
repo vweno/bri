@@ -1,0 +1,38 @@
+
+cgi.csv
+--------
+
+Source: China Global Investment Tracker published by the American Enterprise Institute.
+
+This table include construction contracts only. 
+
+
+invest.csv
+----------
+
+Yearly aggregated data from CGIT. 
+
+
+country.csv
+-----------
+
+Country profile based on UN Country Classification.
+
+
+wdi.csv
+-------
+
+Source: World Bank - World Development Indicators.
+
+
+weo.csv
+-------
+
+Source: IMF - World Economic Outlook
+
+
+eci.csv
+-------
+
+Source: Economic complexity rankings https://oec.world/
+

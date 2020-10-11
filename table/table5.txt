@@ -1,0 +1,19 @@
+
+=============================================
+                  Shock     Shock     Shock  
+                   (1)       (2)       (3)   
+---------------------------------------------
+Post_treat      0.075***  0.081***  0.091*** 
+                 (0.026)   (0.026)   (0.025) 
+                                             
+---------------------------------------------
+Country FE         Yes       Yes       Yes   
+Year FE            Yes       Yes       Yes   
+LDC * FE           No        Yes       Yes   
+Landlocked * FE    No        Yes       Yes   
+Fuel * FE          No        No        Yes   
+Belt&Road * FE     No        No        Yes   
+Observations       544       544       544   
+Adjusted R2       0.748     0.746     0.764  
+=============================================
+Note:             *p<0.1; **p<0.05; ***p<0.01

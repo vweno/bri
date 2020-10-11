@@ -1,0 +1,19 @@
+
+===================================================
+                  (1)      (2)      (3)      (4)   
+---------------------------------------------------
+Post_treat      0.052*** 0.053*** 0.053*** 0.019***
+                (0.011)  (0.010)  (0.011)  (0.007) 
+                                                   
+---------------------------------------------------
+Country FE        Yes      Yes      Yes      Yes   
+Year FE           Yes      Yes      Yes      Yes   
+LDC * FE           No      Yes      Yes      Yes   
+Landlocked * FE    No      Yes      Yes      Yes   
+Fuel * FE          No       No      Yes      Yes   
+Belt&Road * FE     No       No      Yes      Yes   
+Country * Trend    No       No       No      Yes   
+Observations      785      785      785      785   
+Adjusted R2      0.997    0.997    0.997    0.999  
+===================================================
+Note:                   *p<0.1; **p<0.05; ***p<0.01
