@@ -172,3 +172,63 @@ plm.6 <- plm(gdp_gr ~ plm::lag(cgit_green, 1):factor(subsample$world_bank_income
              effect = "twoways")
 
 stargazer(plm.6, type = "text", out = "table/panel3.txt")
+
+
+# DEBT ANALYSIS
+
+# Total debt service (% of exports of goods, services and primary income)
+debt_export <- wb(indicator = "DT.TDS.DECT.EX.ZS") %>%
+    mutate(date = as.integer(date))
+
+# Latin America & Caribbean (excluding high income)
+# Sub-Saharan Africa (excluding high income)
+debt_export %>%
+  filter(iso3c == 'LAC' | iso3c == 'SSA') %>%
+  ggplot(aes(x = date, y = value, group = iso3c)) +
+  labs(x = "", y = "Total debt service ratio") +
+  geom_line() + facet_grid(~iso3c)
+
+# External debt stocks (% of GNI)
+debt_gni <- wb(indicator = "DT.DOD.DECT.GN.ZS") %>%
+    mutate(date = as.integer(date))
+
+debt_gni %>%
+  filter(iso3c == 'LAC' | iso3c == 'SSA') %>%
+  ggplot(aes(x = date, y = value, group = iso3c)) +
+  labs(x = "", y = "External debt stock (% of GNI)") +
+  geom_line() + facet_grid(~iso3c)
+
+
+# China loan to African countries
+china_loan <-
+  read_excel("data/loan_2020.xlsx",
+             sheet = "Loan data by country",
+             range = "A5:BF24") %>%
+    pivot_longer(cols      = 2:58,
+                 names_to  = "country",
+                 values_to = "amount") %>%
+    select(date = `All Type 1 Loans`, everything())
+
+all_loan <-
+  wb_data %>% select(country, date, gdp) %>%
+    inner_join(china_loan, by = c("country", "date")) %>%
+    inner_join(debt_gni, by = c("country", "date")) %>%
+    mutate(china = amount*10^8 / gdp, all_external = value) %>%
+    filter(date == 2018, china > 0) %>%
+    select(country, china, all_external) %>%
+    pivot_longer(cols = china:all_external)
+
+# China loan as proportion as total external debt 
+all_loan %>%
+  ggplot(aes(x = country, y = value, fill = name)) + 
+  geom_col() + 
+  scale_fill_manual(
+    name = NULL, 
+    labels = c("Total", "From China"), 
+    values = c("grey","black")) + 
+  labs(x = "", y = "External debt (% of GNI)") +
+  theme(axis.text.x = element_text(angle = 90))
+
+
+
+
