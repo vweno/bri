@@ -9,12 +9,13 @@ library(wbstats)
 library(psych)
 library(janitor)
 library(plm)
+library(stargazer)
 
 # Load China Global Investment Datasets
 
-cgit_1 <- read_excel("data/cgit_2020s.xlsx", "Dataset 1", skip = 4)
-cgit_2 <- read_excel("data/cgit_2020s.xlsx", "Dataset 2", skip = 4)
-cgit_3 <- read_excel("data/cgit_2020s.xlsx", "Dataset 3", skip = 4)
+cgit_1 <- read_excel("data/cgit_2020s.xlsx" , "Dataset 1"  , skip = 4)
+cgit_2 <- read_excel("data/cgit_2020s.xlsx" , "Dataset 2"  , skip = 4)
+cgit_3 <- read_excel("data/cgit_2020s.xlsx" , "Dataset 3"  , skip = 4)
 cgit_12 <- read_excel("data/cgit_2020s.xlsx", "Dataset 1+2", skip = 4)
 
 cgit_investments <- cgit_1 %>%
@@ -110,45 +111,64 @@ full_sample <- wb_data %>%
 # write_csv(full_sample, "data/sample.csv")
 
 
-# Regression Analisys
+# creats a sample of only low- and middle-income countries
 subsample <- full_sample %>%
   filter(world_bank_income_group_combined_1 != "High Income",
-         un_regions != "Latin America and the Caribbean",
          country != "China") %>%
   mutate(cgit_total = cgit_total*10^8 / gdp,
          cgit_investments = cgit_investments*10^8 / gdp,
          cgit_construction = cgit_construction*10^8 / gdp,
          cgit_green = cgit_green*10^8 / gdp,
-         wgi_overall = wgi_corr + wgi_effi + wgi_poli + wgi_regl + wgi_rule + wgi_voic)
+         wgi_overall = wgi_corr + wgi_effi + wgi_poli + wgi_regl + wgi_rule + wgi_voic,
+         post_bri = date > 2013)
 
-plm(gdp_gr ~ cgit_total + plm::lag(cgit_total) + plm::lag(cgit_total, 2) +
-             log(gdp_pc) + savings + trade + credit + school + rents + wgi_overall,
+
+# REGRESSION ANALYSIS
+
+plm.1 <- plm(gdp_gr ~ cgit_total + plm::lag(cgit_total, 1) + plm::lag(cgit_total, 2) +
+             log(gdp_pc) + trade + credit  + rents + wgi_overall + school + oda,
     data   = subsample,
     index  = c("iso3c", "date"),
     model  = "within",
-    effect = "twoways") %>%
-  summary()
+    effect = "twoways")
 
-plm(gdp_gr ~ cgit_construction + plm::lag(cgit_construction) + plm::lag(cgit_construction, 2) +
-  log(gdp_pc) + savings + trade + credit + school + rents + wgi_overall,
+plm.2 <- plm(gdp_gr ~ cgit_construction + plm::lag(cgit_construction, 1) + plm::lag(cgit_construction, 2) +
+  log(gdp_pc) + trade + credit + rents + wgi_overall + school + oda,
     data   = subsample,
     index  = c("iso3c", "date"),
     model  = "within",
-    effect = "twoways") %>%
-  summary()
+    effect = "twoways")
 
-plm(gdp_gr ~ cgit_investments + plm::lag(cgit_investments) + plm::lag(cgit_investments, 2) +
-  log(gdp_pc) + savings + trade + credit + school + rents + wgi_overall,
+plm.3 <- plm(gdp_gr ~ cgit_investments + plm::lag(cgit_investments, 1) + plm::lag(cgit_investments, 2) +
+  log(gdp_pc)  + trade + credit + rents + wgi_overall + school + oda,
     data   = subsample,
     index  = c("iso3c", "date"),
     model  = "within",
-    effect = "twoways") %>%
-  summary()
+    effect = "twoways")
 
-plm(gdp_gr ~ cgit_green + plm::lag(cgit_green) + plm::lag(cgit_green, 2) +
-  log(gdp_pc) + savings + trade + credit + school + rents + wgi_overall,
+plm.4 <- plm(gdp_gr ~ cgit_green + plm::lag(cgit_green, 1) + plm::lag(cgit_green, 2) +
+  log(gdp_pc) + trade + credit + rents + wgi_overall + school + oda,
     data   = subsample,
     index  = c("iso3c", "date"),
     model  = "within",
-    effect = "twoways") %>%
-  summary()
+    effect = "twoways")
+
+stargazer(plm.1, plm.2, plm.3, plm.4, type = "text", out = "table/panel1.txt")
+
+plm.5 <- plm(gdp_gr ~ plm::lag(cgit_total, 1):factor(un_regions) +
+  log(gdp_pc) + trade + credit  + rents + wgi_overall + school + oda,
+             data   = subsample,
+             index  = c("iso3c", "date"),
+             model  = "within",
+             effect = "twoways")
+
+stargazer(plm.5, type = "text", out = "table/panel2.txt")
+
+plm.6 <- plm(gdp_gr ~ plm::lag(cgit_green, 1):factor(subsample$world_bank_income_group_combined_1) +
+  log(gdp_pc) + trade + credit + rents + wgi_overall + school + oda,
+             data   = subsample,
+             index  = c("iso3c", "date"),
+             model  = "within",
+             effect = "twoways")
+
+stargazer(plm.6, type = "text", out = "table/panel3.txt")
