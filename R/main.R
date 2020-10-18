@@ -1,5 +1,5 @@
-# Title     : TODO
-# Objective : TODO
+# Title: main.R
+# Objective : Estimate the effect of Chinese investment on developing countries
 # Created by: W
 # Created on: 2020/10/14
 
@@ -18,37 +18,22 @@ cgit_2 <- read_excel("data/cgit_2020s.xlsx" , "Dataset 2"  , skip = 4)
 cgit_3 <- read_excel("data/cgit_2020s.xlsx" , "Dataset 3"  , skip = 4)
 cgit_12 <- read_excel("data/cgit_2020s.xlsx", "Dataset 1+2", skip = 4)
 
-cgit_investments <- cgit_1 %>%
-  group_by(Country, Year) %>%
-  summarize(cgit_investments = sum(`Quantity in Millions`))
+cgit_all <- 
+  list(
+    cgit_1 %>% group_by(Country, Year) %>% summarize(cgit_investments = sum(`Quantity in Millions`)), 
+    cgit_2 %>% group_by(Country, Year) %>% summarize(cgit_construction = sum(`Quantity in Millions`)),
+    cgit_3 %>% group_by(Country, Year) %>% summarize(cgit_troubled = sum(`Quantity in Millions`)),
+    cgit_12 %>% group_by(Country, Year) %>% summarize(cgit_total = sum(`Quantity in Millions`)),
+    cgit_12 %>% filter(Greenfield == 'G') %>% group_by(Country, Year) %>% summarize(cgit_green = sum(`Quantity in Millions`))
+  ) %>%
+  reduce(full_join, by = c("Country", "Year"))
 
-cgit_construction <- cgit_2 %>%
-  group_by(Country, Year) %>%
-  summarize(cgit_construction = sum(`Quantity in Millions`))
-
-cgit_troubled <- cgit_3 %>%
-  group_by(Country, Year) %>%
-  summarize(cgit_troubled = sum(`Quantity in Millions`))
-
-cgit_total <- cgit_12 %>%
-  group_by(Country, Year) %>%
-  summarize(cgit_total = sum(`Quantity in Millions`))
-
-cgit_green <- cgit_12 %>%
-  filter(Greenfield == 'G') %>%
-  group_by(Country, Year) %>%
-  summarize(cgit_green = sum(`Quantity in Millions`))
 
 # mapping of CGIT country to ISO3 code
 cgit_iso3 <- read_csv("data/cgit_iso3.csv")
 
 # join them all
-cgit_all <- cgit_investments %>%
-  full_join(cgit_construction, by = c("Country", "Year")) %>%
-  full_join(cgit_troubled, by = c("Country", "Year")) %>%
-  full_join(cgit_total, by = c("Country", "Year")) %>%
-  full_join(cgit_green, by = c("Country", "Year")) %>%
-  left_join(cgit_iso3, by = c("Country" = "country"))
+cgit_all <- left_join(cgit_all, cgit_iso3, by = c("Country" = "country"))
 
 
 # Download World Development Indicators
@@ -125,67 +110,85 @@ subsample <- full_sample %>%
 
 # REGRESSION ANALYSIS
 
-plm.1 <- plm(gdp_gr ~ cgit_total + plm::lag(cgit_total, 1) + plm::lag(cgit_total, 2) +
-             log(gdp_pc) + trade + credit  + rents + wgi_overall + school + oda,
+plm.1 <-
+  plm(
+    gdp_gr ~ cgit_total + plm::lag(cgit_total, 1) + plm::lag(cgit_total, 2) +
+      log(gdp_pc) + trade + credit  + rents + wgi_overall + school + oda,
     data   = subsample,
     index  = c("iso3c", "date"),
     model  = "within",
-    effect = "twoways")
+    effect = "twoways"
+  )
 
-plm.2 <- plm(gdp_gr ~ cgit_construction + plm::lag(cgit_construction, 1) + plm::lag(cgit_construction, 2) +
-  log(gdp_pc) + trade + credit + rents + wgi_overall + school + oda,
-    data   = subsample,
-    index  = c("iso3c", "date"),
-    model  = "within",
-    effect = "twoways")
 
-plm.3 <- plm(gdp_gr ~ cgit_investments + plm::lag(cgit_investments, 1) + plm::lag(cgit_investments, 2) +
-  log(gdp_pc)  + trade + credit + rents + wgi_overall + school + oda,
+plm.2 <-
+  plm(
+    gdp_gr ~ cgit_construction + plm::lag(cgit_construction, 1) + plm::lag(cgit_construction, 2) + 
+      log(gdp_pc) + trade + credit + rents + wgi_overall + school + oda,
     data   = subsample,
     index  = c("iso3c", "date"),
     model  = "within",
-    effect = "twoways")
+    effect = "twoways"
+  )
 
-plm.4 <- plm(gdp_gr ~ cgit_green + plm::lag(cgit_green, 1) + plm::lag(cgit_green, 2) +
-  log(gdp_pc) + trade + credit + rents + wgi_overall + school + oda,
+plm.3 <-
+  plm(
+    gdp_gr ~ cgit_investments + plm::lag(cgit_investments, 1) + plm::lag(cgit_investments, 2) + 
+      log(gdp_pc)  + trade + credit + rents + wgi_overall + school + oda,
     data   = subsample,
     index  = c("iso3c", "date"),
     model  = "within",
-    effect = "twoways")
+    effect = "twoways"
+  )
+
+plm.4 <-
+  plm(
+    gdp_gr ~ cgit_green + plm::lag(cgit_green, 1) + plm::lag(cgit_green, 2) +
+      log(gdp_pc) + trade + credit + rents + wgi_overall + school + oda,
+    data   = subsample,
+    index  = c("iso3c", "date"),
+    model  = "within",
+    effect = "twoways"
+  )
 
 stargazer(plm.1, plm.2, plm.3, plm.4, type = "text", out = "table/panel1.txt")
 
-plm.5 <- plm(gdp_gr ~ plm::lag(cgit_total, 1):factor(un_regions) +
-  log(gdp_pc) + trade + credit  + rents + wgi_overall + school + oda,
-             data   = subsample,
-             index  = c("iso3c", "date"),
-             model  = "within",
-             effect = "twoways")
+plm.5 <- plm(
+  gdp_gr ~ plm::lag(cgit_total, 1):factor(un_regions) +
+    log(gdp_pc) + trade + credit  + rents + wgi_overall + school + oda,
+  data   = subsample,
+  index  = c("iso3c", "date"),
+  model  = "within",
+  effect = "twoways"
+)
 
 stargazer(plm.5, type = "text", out = "table/panel2.txt")
 
-plm.6 <- plm(gdp_gr ~ plm::lag(cgit_green, 1):factor(subsample$world_bank_income_group_combined_1) +
-  log(gdp_pc) + trade + credit + rents + wgi_overall + school + oda,
-             data   = subsample,
-             index  = c("iso3c", "date"),
-             model  = "within",
-             effect = "twoways")
+plm.6 <-
+  plm(
+    gdp_gr ~ plm::lag(cgit_green, 1):factor(subsample$world_bank_income_group_combined_1) +
+      log(gdp_pc) + trade + credit + rents + wgi_overall + school + oda,
+    data   = subsample,
+    index  = c("iso3c", "date"),
+    model  = "within",
+    effect = "twoways"
+  )
 
 stargazer(plm.6, type = "text", out = "table/panel3.txt")
 
 
 # DEBT ANALYSIS
-
+  
 # Total debt service (% of exports of goods, services and primary income)
 debt_export <- wb(indicator = "DT.TDS.DECT.EX.ZS") %>%
-    mutate(date = as.integer(date))
+  mutate(date = as.integer(date))
 
 # Latin America & Caribbean (excluding high income)
 # Sub-Saharan Africa (excluding high income)
 debt_export %>%
   filter(iso3c == 'LAC' | iso3c == 'SSA') %>%
   ggplot(aes(x = date, y = value, group = iso3c)) +
-  labs(x = "", y = "Total debt service ratio") +
+  labs(x = "", y = "Total debt service (% of exports)") +
   geom_line() + facet_grid(~iso3c)
 
 # External debt stocks (% of GNI)
