@@ -32,7 +32,7 @@ data_1 <- data %>%
                             iso3c == "LAC" ~ "Latin America", 
                             TRUE ~ country )) %>%
   mutate(rents = rents_gdp*gdp/100) %>%
-  mutate(`debt_gdp` = debt_ext/gdp*100, 
+  mutate(debt_gdp = debt_ext/gdp*100, 
          debt_export = debt_ext_srv/exports*100, 
          debt_rents = debt_ext_srv/rents*100) %>%
   select(region, date, 
