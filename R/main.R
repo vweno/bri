@@ -54,7 +54,11 @@ if (file.exists("data/wb_data.csv")) {
     "NY.GDP.PCAP.KD.ZG"    = "gdp_gr",          # GDP per capita growth (annual %)
     "NY.GDS.TOTL.ZS"       = "savings",         # Gross domestic savings (% of GDP)
     "BX.KLT.DINV.WD.GD.ZS" = "fdi",             # Foreign direct investment, net inflows (% of GDP)
+    "DT.DOD.DECT.GN.ZS"    = "debt",            # External debt (% of GDP)
     "NE.TRD.GNFS.ZS"       = "trade",           # Trade (% of GDP)
+    "SI.POV.DDAY"          = "poverty",         # Poverty headcount ratio at $1.9
+    "NV.IND.MANF.ZS"       = "industry",        # Manufacturing (% of GDP)
+    "SL.TLF.ACTI.ZS"       = "labor",           # Labor force participation rate
     "FS.AST.PRVT.GD.ZS"    = "credit",          # Domestic credit to private sector (% of GDP)
     "NY.GDP.TOTL.RT.ZS"    = "rents",           # Total natural resources rents (% of GDP)
     "SP.POP.TOTL"          = "pop",             # Population, total
@@ -176,6 +180,47 @@ plm.6 <-
 
 stargazer(plm.6, type = "text", out = "table/panel3.txt")
 
+plm.7 <-
+  plm(
+    industry ~ cgit_total + plm::lag(cgit_total, 1) + plm::lag(cgit_total, 2) +
+      log(gdp_pc) + trade + credit  + rents + school + oda,
+    data   = subsample,
+    index  = c("iso3c", "date"),
+    model  = "within",
+    effect = "twoways"
+  )
+
+plm.8 <-
+  plm(
+    labor ~ cgit_total + plm::lag(cgit_total, 1) + plm::lag(cgit_total, 2) +
+      log(gdp_pc) + trade + credit  + rents + school + oda,
+    data   = subsample,
+    index  = c("iso3c", "date"),
+    model  = "within",
+    effect = "twoways"
+  )
+
+plm.9 <-
+  plm(
+    debt ~ cgit_total + plm::lag(cgit_total, 1) + plm::lag(cgit_total, 2) +
+      log(gdp_pc) + trade + credit  + rents + school + oda,
+    data   = subsample,
+    index  = c("iso3c", "date"),
+    model  = "within",
+    effect = "twoways"
+  )
+
+plm.10 <-
+  plm(
+    wgi_overall ~ cgit_total + plm::lag(cgit_total, 1) + plm::lag(cgit_total, 2) +
+      log(gdp_pc) + trade + credit  + rents + school + oda,
+    data   = subsample,
+    index  = c("iso3c", "date"),
+    model  = "within",
+    effect = "twoways"
+  )
+
+stargazer(plm.7, plm.8, plm.9, plm.10, type = "text", out = "table/panel4.txt")
 
 # DEBT ANALYSIS
   
@@ -186,7 +231,7 @@ debt_export <- wb(indicator = "DT.TDS.DECT.EX.ZS") %>%
 # Latin America & Caribbean (excluding high income)
 # Sub-Saharan Africa (excluding high income)
 debt_export %>%
-  filter(iso3c == 'LAC' | iso3c == 'SSA') %>%
+  filter(iso3c == 'LAC' | iso3c == 'SSA' | iso3c == 'ECA') %>%
   ggplot(aes(x = date, y = value, group = iso3c)) +
   labs(x = "", y = "Total debt service (% of exports)") +
   geom_line() + facet_grid(~iso3c)

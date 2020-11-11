@@ -5,7 +5,7 @@
                                                                                     gdp_gr           
 -----------------------------------------------------------------------------------------------------
 log(gdp_pc)                                                                        2.729***          
-                                                                                    (0.920)          
+                                                                                    (0.919)          
                                                                                                      
 trade                                                                              0.032***          
                                                                                     (0.011)          
@@ -28,22 +28,19 @@ oda                                                                             
 plm::lag(cgit_total, 1):factor(un_regions)Africa                                    0.054**          
                                                                                     (0.025)          
                                                                                                      
-plm::lag(cgit_total, 1):factor(un_regions)Asia                                      -0.008           
-                                                                                    (0.254)          
+plm::lag(cgit_total, 1):factor(un_regions)Asia                                       0.015           
+                                                                                    (0.047)          
                                                                                                      
-plm::lag(cgit_total, 1):factor(un_regions)Europe                                     0.063           
-                                                                                    (0.125)          
+plm::lag(cgit_total, 1):factor(un_regions)Europe                                     0.066           
+                                                                                    (0.122)          
                                                                                                      
 plm::lag(cgit_total, 1):factor(un_regions)Latin America and the Caribbean            0.184           
                                                                                     (0.198)          
                                                                                                      
-plm::lag(cgit_total, 1):factor(bri_init)1                                            0.023           
-                                                                                    (0.251)          
-                                                                                                     
 -----------------------------------------------------------------------------------------------------
 Observations                                                                          890            
 R2                                                                                   0.062           
-Adjusted R2                                                                         -0.102           
-F Statistic                                                                 4.159*** (df = 12; 757)  
+Adjusted R2                                                                         -0.100           
+F Statistic                                                                 4.542*** (df = 11; 758)  
 =====================================================================================================
 Note:                                                                     *p<0.1; **p<0.05; ***p<0.01
